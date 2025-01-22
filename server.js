@@ -74,11 +74,3 @@ const Delete = (id) => {
         })
     })
 }
-
-
-
-
-//Read()
-//Write()
-//Update(5,"Boopathi")
-//Delete(5)
