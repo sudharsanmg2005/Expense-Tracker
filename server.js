@@ -1,55 +1,84 @@
-// const http = require("http");
-// const calculate = require("./calculator");
-
-// const server = http.createServer((req, res) => {
-//     res.writeHead(200, {"content-type": "text/plain"});
-//     res.end("Hello World\n" + calculate.add(20, 10) +"\n"+ calculate.sub(120, 100));
-// });
-
-// server.listen(3000, () => {
-//     console.log("Server running at http://127.0.0.1:3000/");``
-// });
-
-
-// // const calculate = require("./calculator")
-// // console.log(calculate.add(20,10))
-const fs = require("fs");
-
-// fs.readFile('sample.txt',"utf8",(err,data)=>{
-//     if(err){
-//         console.error(err)
-//         return
-//     }
-
-//     console.log(data)
-// })
-const newPerson={ 
-    name:"Aswin",
-    age: 21,
-    city: "Therivillai"
-}
-fs.readFile('sample.json','utf8',(err,data)=>{
-
-    if(err){
-        console.error(err)
-        return
-    }
-    const json= JSON.parse(data)
-    // const newList = [...json, newPerson]
-    // fs.writeFile('sample.json',JSON.stringify(newList),(err)=>{
-    //     if(err){
-    //         console.error(err)
-    //         return
-    //     }
-    // })
-    const newList1 = json.filter((data) => data.id !== 3);
-    fs.writeFile('sample.json',JSON.stringify(newList1),(err)=>{
-        if(err){
+const fs = require('fs')
+const Read = () => {
+    fs.readFile('student1.json', 'utf8', (err, data) => {
+        if (err) {
             console.error(err)
             return
         }
+        const json = JSON.parse(data)
+        console.log(json)
     })
-    
-    // json.push(newPerson)
-    // console.log(json);
-});
+}
+const newStudent = {
+    id: 5,
+    name: "Manoj",
+    dept: "AIDS"
+}
+const Write = () => {
+    fs.readFile('student1.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        const json = JSON.parse(data)
+        const studentsList = [...json, newStudent]
+        fs.writeFile('student1.json', JSON.stringify(studentsList), (err) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+            console.log("Written Successfully");
+        })
+    })
+}
+const Update = (id, newName) => {
+    fs.readFile('student1.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        let json = JSON.parse(data);
+        const studentIndex = json.findIndex(student => student.id === id);
+        if (studentIndex !== -1) {
+            json[studentIndex].name = newName;
+            fs.writeFile('student1.json', JSON.stringify(json), (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log("Updated Successfully");
+            });
+        } else {
+            console.log("Student Id not found");
+        }
+    });
+};
+const Delete = (id) => {
+    fs.readFile('student1.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error(err)
+            return
+        }
+        const json = JSON.parse(data)
+        const studentsList=json.filter( student => student.id != id)
+        if(studentsList.length==json.length){
+            console.log("Student ID not found");
+            return;
+        }
+        fs.writeFile('student1.json', JSON.stringify(studentsList), (err) => {
+            if (err) {
+                console.error(err)
+                return
+            }
+            console.log("Deleted Successfully");
+        })
+    })
+}
+
+
+
+
+//Read()
+//Write()
+//Update(5,"Boopathi")
+//Delete(5)
